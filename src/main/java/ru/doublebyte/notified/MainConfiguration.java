@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import ru.doublebyte.notified.services.NotificationRenderer;
 
 @Configuration
 public class MainConfiguration {
@@ -17,6 +18,11 @@ public class MainConfiguration {
         ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
         taskScheduler.setPoolSize(threadPoolSize);
         return taskScheduler;
+    }
+
+    @Bean
+    public NotificationRenderer notificationRenderer() {
+        return new NotificationRenderer();
     }
 
 }
