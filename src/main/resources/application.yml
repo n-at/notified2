@@ -3,8 +3,8 @@ notified:
   #Thread pool size. Used for parallel message sending
   thread-pool-size: 2
 
-#Email transports configuration
-transports: []
+  #Email transports configuration
+  transports: []
 
-#Notification templates
-templates: []
+  #Notification templates
+  templates: []
