@@ -2,7 +2,6 @@ package ru.doublebyte.notified;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
@@ -13,7 +12,6 @@ import ru.doublebyte.notified.services.MessageSender;
 import ru.doublebyte.notified.services.NotificationRenderer;
 
 @Configuration
-@EnableConfigurationProperties
 public class MainConfiguration {
 
     @Value("${notified.thread-pool-size}")

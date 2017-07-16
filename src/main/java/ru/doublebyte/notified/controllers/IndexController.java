@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.doublebyte.notified.services.MessageSender;
+import ru.doublebyte.notified.structs.NotificationTemplate;
 import ru.doublebyte.notified.structs.ServiceRequest;
 import ru.doublebyte.notified.structs.ServiceResponse;
 
@@ -40,7 +41,8 @@ public class IndexController {
         }
 
         try {
-            messageSender.notify(request);
+            NotificationTemplate notificationTemplate = messageSender.getNotificationTemplate(request);
+            messageSender.notify(notificationTemplate, request);
         } catch (Exception e) {
             return ServiceResponse.error(e.getMessage());
         }

@@ -1,12 +1,17 @@
 package ru.doublebyte.notified.structs;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Notification template configuration
  */
 public class NotificationTemplate {
 
+    @NotNull
     private String transport;
+    @NotNull
     private String key;
+    @NotNull
     private String file;
 
     private String from;

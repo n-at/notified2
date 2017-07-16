@@ -47,6 +47,10 @@ public class NotificationRenderer {
             throw new RuntimeException("Template file not found or cannot be loaded");
         }
 
+        if (parameters == null) {
+            parameters = new HashMap<>();
+        }
+
         try {
             Map<String, Object> templateParameters = new HashMap<>();
             parameters.forEach(templateParameters::put);
