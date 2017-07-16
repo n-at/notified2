@@ -116,10 +116,12 @@ public class MessageSender {
      * @return Message
      */
     private MimeMessage createMessage(JavaMailSender mailSender, NotificationTemplate notificationTemplate, ServiceRequest request) {
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, notificationTemplate.getCharset());
-
         try {
+            boolean hasAttachments = notificationTemplate.isAllowAttachments() && request.getAttachments().size() > 0;
+
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, hasAttachments, notificationTemplate.getCharset());
+
             //From
             if (notificationTemplate.isOverrideFrom() && request.getFrom() != null && !request.getFrom().isEmpty()) {
                 helper.setFrom(request.getFrom());
@@ -183,7 +185,8 @@ public class MessageSender {
                     try {
                         helper.addAttachment(fileName, new ByteArrayResource(content));
                     } catch (Exception e) {
-                        logger.warn("Failed to attach file '{}' in notification template '{}'", fileName, request.getTemplate());
+                        logger.warn("Failed to attach file '{}' in notification template '{}': {}",
+                                fileName, request.getTemplate(), e.getMessage());
                     }
                 });
             }

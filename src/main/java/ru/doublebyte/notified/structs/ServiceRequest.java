@@ -1,5 +1,7 @@
 package ru.doublebyte.notified.structs;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -105,7 +107,7 @@ public class ServiceRequest {
                     throw new IllegalArgumentException("Attachment field is null: " + fileName);
                 }
 
-                byte[] content = Base64.getDecoder().decode(value);
+                byte[] content = Base64.getMimeDecoder().decode(value);
 
                 request.attachments.put(fileName, content);
             } else {
