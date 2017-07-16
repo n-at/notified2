@@ -1,0 +1,68 @@
+#Application configuration
+notified:
+  #Thread pool size. Used for parallel message sending
+  thread-pool-size: 2
+
+  #Email transports configuration (MailProperties)
+  #https://github.com/spring-projects/spring-boot/blob/v1.5.4.RELEASE/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mail/MailProperties.java
+  transports:
+    #SMTP with TLS
+    test_email:
+      username: email@example.com
+      password: ******
+      host: smtp.emample.com
+      port: 465
+      protocol: smtps
+
+    #For Gmail
+    test_gmail:
+      username: username@gmail.com
+      password: ******
+      host: smtp.gmail.com
+      port: 587
+      properties:
+        mail.smtp.starttls.enable: true
+
+  #Notification templates
+  templates:
+    template:
+      #Transport name
+      transport: test_email
+
+      #API key
+      key: test
+
+      #Template file name without extension
+      #File from templates directory with .pebble extension
+      #Pebble is used (http://www.mitchellbosecke.com/pebble/home)
+      file: test
+
+      #Message properties
+      from: mail@example.com
+      to: othermail@example.com.com
+      subject: test
+      cc: {optional}
+      bcc: {optional}
+      reply-to: {optional}
+      body: notification text
+
+      #Send text as html
+      html: false
+
+      #Text encoding
+      charset: UTF-8
+
+      #Enable attachments
+      #Attachment is field in request with name like api_attach_{filename}. Value is file content encoded in base64
+      allow-attachments: false
+
+      #Ability to override message properties
+      #Allows to client to provide message properties in request fields like api_{field} (e.g. api_subject)
+      #Except of override-body: when true then template with request parameters will be rendered
+      override-from: false
+      override-to: false
+      override-cc: false
+      override-bcc: false
+      override-reply-to: false
+      override-subject: false
+      override-body: true
