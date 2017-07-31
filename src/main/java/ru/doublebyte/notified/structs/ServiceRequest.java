@@ -1,10 +1,10 @@
 package ru.doublebyte.notified.structs;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Request to service
@@ -40,7 +40,7 @@ public class ServiceRequest {
     /**
      * Parameters for template rendering
      */
-    private Map<String, String> parameters = new HashMap<>();
+    private Map<String, Object> parameters = new HashMap<>();
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -54,6 +54,9 @@ public class ServiceRequest {
         if (params == null || params.isEmpty()) {
             throw new IllegalArgumentException("no request parameters provided");
         }
+
+        Map<String, Map<String, String>> mapParameters = new HashMap<>();
+        Pattern mapParameterKeyPattern = Pattern.compile("^(.*)\\[(.*)]$");
 
         params.forEach((key, value) -> {
             if (key == null) {
@@ -111,9 +114,24 @@ public class ServiceRequest {
 
                 request.attachments.put(fileName, content);
             } else {
-                request.parameters.put(key, value);
+                Matcher matcher = mapParameterKeyPattern.matcher(key);
+
+                if (matcher.matches()) {
+                    String parameterName = matcher.group(1);
+                    String parameterKey = matcher.group(2);
+
+                    if (!mapParameters.containsKey(parameterName)) {
+                        mapParameters.put(parameterName, new HashMap<>());
+                    }
+
+                    mapParameters.get(parameterName).put(parameterKey, value);
+                } else {
+                    request.parameters.put(key, value);
+                }
             }
         });
+
+        request.parameters.putAll(mapParameters);
 
         if (request.template == null) {
             throw new IllegalArgumentException("api_template required");
@@ -172,7 +190,7 @@ public class ServiceRequest {
         return attachments;
     }
 
-    public Map<String, String> getParameters() {
+    public Map<String, Object> getParameters() {
         return parameters;
     }
 
