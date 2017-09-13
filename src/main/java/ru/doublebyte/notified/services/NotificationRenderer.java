@@ -37,7 +37,7 @@ public class NotificationRenderer {
      * @param parameters Parameters
      * @return Rendered string
      */
-    public String render(String templateName, Map<String, String> parameters) {
+    public String render(String templateName, Map<String, Object> parameters) {
         if (!templates.containsKey(templateName)) {
             templates.put(templateName, load(templateName));
         }
@@ -52,11 +52,8 @@ public class NotificationRenderer {
         }
 
         try {
-            Map<String, Object> templateParameters = new HashMap<>();
-            parameters.forEach(templateParameters::put);
-
             Writer writer = new StringWriter();
-            template.evaluate(writer, templateParameters);
+            template.evaluate(writer, parameters);
             return writer.toString();
         } catch (Exception e) {
             logger.warn("Unable to render template {}: {}", templateName, e.getMessage());

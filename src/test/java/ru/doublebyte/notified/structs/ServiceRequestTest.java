@@ -224,11 +224,20 @@ public class ServiceRequestTest {
         ServiceRequest request = ServiceRequest.parse(params);
         assertEquals(new HashMap<>(), request.getParameters());
 
-        Map<String, String> parameters = new HashMap<>();
+        Map<String, Object> parameters = new HashMap<>();
         parameters.put("key", "value");
 
         params.put("api_from", "from");
         params.put("key", "value");
+        request = ServiceRequest.parse(params);
+        assertEquals(parameters, request.getParameters());
+
+        params.put("parameter[test1]", "value1");
+        params.put("parameter[test2]", "value2");
+        Map<String, Object> parameterList = new HashMap<>();
+        parameterList.put("test1", "value1");
+        parameterList.put("test2", "value2");
+        parameters.put("parameter", parameterList);
         request = ServiceRequest.parse(params);
         assertEquals(parameters, request.getParameters());
     }
