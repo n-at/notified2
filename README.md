@@ -30,6 +30,15 @@ Configuration
 
 Configuration sample with useful comments can be found in `application.sample.yml`.
 
+Usage
+=====
+
+First, you need to setup a *notification template* and *transport* in `application.yml`.
+
+When notified is started, you can send it a POST request with notification data. This data should contain template name
+(`api_template` field), template key (`api_key` field), transport configuration fields (if needed). Other request
+fields can be used for rendering the notification body.
+
 License
 =======
 
