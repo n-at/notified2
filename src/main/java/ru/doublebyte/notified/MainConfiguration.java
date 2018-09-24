@@ -2,10 +2,12 @@ package ru.doublebyte.notified;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import ru.doublebyte.notified.configuration.TemplatesConfiguration;
 import ru.doublebyte.notified.configuration.TransportsConfiguration;
 import ru.doublebyte.notified.services.MessageSender;
@@ -48,6 +50,16 @@ public class MainConfiguration {
                 transportsConfiguration().getTransportMailSenders(),
                 templatesConfiguration().getTemplates()
         );
+    }
+
+    @Bean
+    public HandlerExceptionResolver sentryExceptionResolver() {
+        return new io.sentry.spring.SentryExceptionResolver();
+    }
+
+    @Bean
+    public ServletContextInitializer sentryServletContextInitializer() {
+        return new io.sentry.spring.SentryServletContextInitializer();
     }
 
 }
