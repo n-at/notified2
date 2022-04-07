@@ -17,7 +17,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <pebble.version>3.0.8</pebble.version>
+        <pebble.version>3.1.5</pebble.version>
         <sentry.version>1.7.10</sentry.version>
         <dockerfile-plugin.version>1.3.3</dockerfile-plugin.version>
     </properties>
@@ -38,7 +38,7 @@
         </dependency>
         <dependency>
             <groupId>io.pebbletemplates</groupId>
-            <artifactId>pebble-spring-boot-2-starter</artifactId>
+            <artifactId>pebble-spring-boot-starter</artifactId>
             <version>${pebble.version}</version>
         </dependency>
         <dependency>
